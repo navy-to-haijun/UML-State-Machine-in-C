@@ -45,9 +45,9 @@ if ( CMAKE_C_COMPILER_ID MATCHES "Clang|AppleClang|GNU" )
     target_compile_options( simple_state_machine PRIVATE -Werror )
 endif()
 
-target_compile_definitions(simple_state_machine PRIVATE HSM_CONFIG)
-configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/../../CMake/hsm_config.h.in"
-            "${CMAKE_CURRENT_BINARY_DIR}/hsm_config.h" )
+# target_compile_definitions(simple_state_machine PRIVATE HSM_CONFIG)
+# configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/../../CMake/hsm_config.h.in"
+#             "${CMAKE_CURRENT_BINARY_DIR}/hsm_config.h" )
 
 # Setup compiler include path
 target_include_directories(simple_state_machine PRIVATE ${CMAKE_CURRENT_BINARY_DIR})

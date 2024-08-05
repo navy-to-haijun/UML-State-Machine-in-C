@@ -1,0 +1,3 @@
+/home/haijun/桌面/UML-State-Machine-in-C/demo/simple_state_machine/build/CMakeFiles/simple_state_machine.dir
+/home/haijun/桌面/UML-State-Machine-in-C/demo/simple_state_machine/build/CMakeFiles/edit_cache.dir
+/home/haijun/桌面/UML-State-Machine-in-C/demo/simple_state_machine/build/CMakeFiles/rebuild_cache.dir

@@ -1,17 +1,6 @@
 /**
  * \file
  * \brief Simple finite state machine example
-
- * \author  Nandkishor Biradar
- * \date    14 December 2018
-
- *  Copyright (c) 2018-2019 Nandkishor Biradar
- *  https://github.com/kiishor
-
- *  Distributed under the MIT License, (See accompanying
- *  file LICENSE or copy at https://mit-license.org/)
- */
-
 /*
  *  --------------------- INCLUDE FILES ---------------------
  */
@@ -24,14 +13,6 @@
 /*
  *  --------------------- ENUMERATION ---------------------
  */
-
-//! List of states the process state machine
-typedef enum
-{
-  IDLE_STATE,
-  ACTIVE_STATE,
-  PAUSE_STATE
-}process_state_t;
 
 /*
  *  --------------------- Function prototype ---------------------

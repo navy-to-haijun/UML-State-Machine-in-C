@@ -1,15 +1,6 @@
 /**
  * \file
  * \brief hierarchical state machine
-
- * \author  Nandkishor Biradar
- * \date    01 December 2018
-
- *  Copyright (c) 2018-2019 Nandkishor Biradar
- *  https://github.com/kiishor
-
- *  Distributed under the MIT License, (See accompanying
- *  file LICENSE or copy at https://mit-license.org/)
  */
 
 /*
@@ -48,11 +39,11 @@ do{                                                             \
  *  --------------------- FUNCTION BODY ---------------------
  */
 
-/** \brief dispatch events to state machine
+/** \brief 将事件派发到所有状态机
  *
- * \param pState_Machine[] state_machine_t* const  array of state machines
- * \param quantity uint32_t number of state machines
- * \return state_machine_result_t result of state machine
+ * \param pState_Machine[] 状态机数组
+ * \param quantity        状态机数量
+ * \return                状态机的处理结果
  *
  */
 state_machine_result_t dispatch_event(state_machine_t* const pState_Machine[]
@@ -65,7 +56,7 @@ state_machine_result_t dispatch_event(state_machine_t* const pState_Machine[]
 {
   state_machine_result_t result;
 
-  // Iterate through all state machines in the array to check if event is pending to dispatch.
+  // 遍历所以状态机，查看是否有需要分配的事件
   for(uint32_t index = 0; index < quantity;)
   {
     if(pState_Machine[index]->Event == 0)
@@ -88,16 +79,12 @@ state_machine_result_t dispatch_event(state_machine_t* const pState_Machine[]
 
       switch(result)
       {
+      // 事件处理成功，，清除事件
       case EVENT_HANDLED:
-        // Clear event, if successfully handled by state handler.
         pState_Machine[index]->Event = 0;
-
-        // intentional fall through
-
-        // State handler handled the previous event successfully,
-        // and posted a new event to itself.
+        break;
+      // 待定
       case TRIGGERED_TO_SELF:
-
         index = 0;  // Restart the event dispatcher from the first state machine.
         break;
 
@@ -132,11 +119,11 @@ state_machine_result_t dispatch_event(state_machine_t* const pState_Machine[]
   return EVENT_HANDLED;
 }
 
-/** \brief Switch to target states without traversing to hierarchical levels.
+/** \brief  切换状态
  *
- * \param pState_Machine state_machine_t* const   pointer to state machine
- * \param pTarget_State const state_t* const      Target state to traverse
- * \return extern state_machine_result_t          Result of state traversal
+ * \param pState_Machine  状态机
+ * \param pTarget_State   需要转换的状态
+ * \return                切换结果
  *
  */
 extern state_machine_result_t switch_state(state_machine_t* const pState_Machine,
@@ -146,9 +133,9 @@ extern state_machine_result_t switch_state(state_machine_t* const pState_Machine
   bool triggered_to_self = false;
   pState_Machine->State = pTarget_State;    // Save the target node
 
-  // Call Exit function before leaving the Source state.
+  // 执行退出动作（上一个状态）
     EXECUTE_HANDLER(pSource_State->Exit, triggered_to_self, pState_Machine);
-  // Call entry function before entering the target state.
+  // 执行进入状态（目标状态）
     EXECUTE_HANDLER(pTarget_State->Entry, triggered_to_self, pState_Machine);
 
   if(triggered_to_self == true)

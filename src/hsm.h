@@ -1,15 +1,7 @@
 /**
  * \file
  * \brief hierarchical state machine
-
- * \author  Nandkishor Biradar
- * \date    01 December 2018
-
- *  Copyright (c) 2018-2019 Nandkishor Biradar
- *  https://github.com/kiishor
-
- *  Distributed under the MIT License, (See accompanying
- *  file LICENSE or copy at https://mit-license.org/)
+ * 
  */
 
 #ifndef HSM_H
@@ -22,31 +14,31 @@
 /*
  *  --------------------- DEFINITION ---------------------
  */
-
+/*是否开启分层状态机*/
 #ifndef HIERARCHICAL_STATES
-//! Default configuration is hierarchical state machine
-#define  HIERARCHICAL_STATES    1
+#define  HIERARCHICAL_STATES    0
 #endif // HIERARCHICAL_STATES
 
+/*是否开启状态机日志*/
 #ifndef STATE_MACHINE_LOGGER
-#define STATE_MACHINE_LOGGER     0        //!< Disable the logging of state machine
+#define STATE_MACHINE_LOGGER     1 
 #endif // STATE_MACHINE_LOGGER
 
+/*是否开启变量长度数组*/
 #ifndef HSM_USE_VARIABLE_LENGTH_ARRAY
-#define HSM_USE_VARIABLE_LENGTH_ARRAY 1
+#define HSM_USE_VARIABLE_LENGTH_ARRAY 0
 #endif
 
 /*
  *  --------------------- ENUMERATION ---------------------
  */
 
-//! List of state machine result code
+/*状态机返回值枚举*/
 typedef enum
 {
-  EVENT_HANDLED,      //!< Event handled successfully.
-  EVENT_UN_HANDLED,    //!< Event could not be handled.
-  //!< Handler handled the Event successfully and posted new event to itself.
-  TRIGGERED_TO_SELF,
+  EVENT_HANDLED,      // 事件处理成功
+  EVENT_UN_HANDLED,   // 事件处理失败
+  TRIGGERED_TO_SELF,  // 事件处理完状态回到自身
 }state_machine_result_t;
 
 /*
@@ -64,38 +56,38 @@ typedef state_machine_result_t (*state_handler) (state_machine_t* const State);
 typedef void (*state_machine_event_logger)(uint32_t state_machine, uint32_t state, uint32_t event);
 typedef void (*state_machine_result_logger)(uint32_t state, state_machine_result_t result);
 
-//! finite state structure
+/*有限状态结构体*/
 struct finite_state{
-  state_handler Handler;      //!< State handler function
-  state_handler Entry;        //!< Entry action for state
-  state_handler Exit;          //!< Exit action for state.
+  state_handler Handler;       // 状态动作函数指针
+  state_handler Entry;         // 状态进入动作函数指针
+  state_handler Exit;         // 状态退出动作函数指针
 
 #if STATE_MACHINE_LOGGER
   uint32_t Id;              //!< unique identifier of state within the single state machine
 #endif
 };
 
-//! Hierarchical state structure
+/*分层状态机结构体*/
 struct hierarchical_state
 {
-  state_handler Handler;      //!< State handler function
-  state_handler Entry;        //!< Entry action for state
-  state_handler Exit;          //!< Exit action for state.
+  state_handler Handler;      // 状态动作函数指针
+  state_handler Entry;        // 状态进入动作函数指针
+  state_handler Exit;         // 状态退出动作函数指针
 
 #if STATE_MACHINE_LOGGER
   uint32_t Id;              //!< unique identifier of state within the single state machine
 #endif
 
-  const state_t* const Parent;    //!< Parent state of the current state.
-  const state_t* const Node;       //!< Child states of the current state.
-  uint32_t Level;            //!< Hierarchy level from the top state.
+  const state_t* const Parent;    // 父状态
+  const state_t* const Node;      // 子状态
+  uint32_t Level;                 // 该状态的层级（和顶层相比）
 };
 
-//! Abstract state machine structure
+/*抽象出状态机结构体*/
 struct state_machine_t
 {
-   uint32_t Event;          //!< Pending Event for state machine
-   const state_t* State;    //!< State of state machine.
+   uint32_t Event;          // 状态机待处理的事件
+   const state_t* State;    // 状态机的状态
 };
 
 /*

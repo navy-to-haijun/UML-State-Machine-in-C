@@ -4,30 +4,26 @@
 /**
  * \file
  * \brief Simple finite state machine example
-
- * \author  Nandkishor Biradar
- * \date    14 December 2018
-
- *  Copyright (c) 2018-2019 Nandkishor Biradar
- *  https://github.com/kiishor
-
- *  Distributed under the MIT License, (See accompanying
- *  file LICENSE or copy at https://mit-license.org/)
- */
-
 /*
  *  --------------------- ENUMERATION ---------------------
  */
 
-//! List of process events
+/*炸弹的状态*/
 typedef enum
 {
-  START = 1,
-  STOP,
-  PAUSE,
-  RESUME,
-  TIMEOUT,
-}process_event_t;
+  SETTING,      // 设置
+  TIMING,       // 计时
+  EXPLOSION,    // 爆炸
+}bomb_state_t;
+
+/*炸弹的事件*/
+typedef enum
+{
+  UP = 1,
+  DOWN,
+  ARM,
+  TICK,
+}bomb_event_t;
 
 /*
  *  --------------------- STRUCTURE ---------------------

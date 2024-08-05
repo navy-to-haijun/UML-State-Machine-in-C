@@ -1,0 +1,1 @@
+/usr/bin/cc  -pthread CMakeFiles/simple_state_machine.dir/src/main.c.o CMakeFiles/simple_state_machine.dir/src/demo_process.c.o CMakeFiles/simple_state_machine.dir/home/haijun/桌面/UML-State-Machine-in-C/src/hsm.c.o -o simple_state_machine 
